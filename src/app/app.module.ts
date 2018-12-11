@@ -12,6 +12,7 @@ import { SignPComponent } from './sign-p/sign-p.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { MatExpansionModule} from '@angular/material';
 import { TestMatItemComponent } from './test-mat-item/test-mat-item.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TestMatItemComponent } from './test-mat-item/test-mat-item.component';
     MatInputModule,
     MatMenuModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
