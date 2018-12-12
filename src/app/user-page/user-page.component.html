@@ -1,12 +1,12 @@
 <div style="margin-left: 20px" fxLayout="row">
   <div fxLayout="column">
     <div>
-      <h2>Hallo</h2>
+      <h2>Hallo {{user.uname | json}}</h2>
     </div>
   </div>
 </div>
 <div fxLayout="row">
-  <img fxFlex="10%" src="assets/pictures/profilMock.jpg">
+  <img fxFlex="10" src="assets/pictures/profilMock.jpg">
   <div>
     <table>
       <tbody>
@@ -21,12 +21,15 @@
     <div fxLayout="column">
       <div>
         <mat-accordion>
-          <mat-expansion-panel>
+          <mat-expansion-panel *ngFor="let doc of user.docs">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Tüv Bescheinigung
+                {{doc.name}}
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div>
+              <p *ngFor="let version of doc.versions">{{version.file}}</p>
+            </div>
             <div fxLayout="column"></div>
             <div>
             <button class="expansion-button" mat-raised-button="primary">Neue Version pushen</button>
@@ -36,49 +39,6 @@
             </div>
             <div>
             <button class="expansion-button" mat-raised-button="primary">Archivieren</button>
-            </div>
-            <div>
-              <p>Letzte Bearbeitung: 12.01.2018</p>
-            </div>
-          </mat-expansion-panel>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Amazon Rechnung
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div fxLayout="column"></div>
-            <div>
-              <button class="expansion-button" mat-raised-button="primary">Neue Version pushen</button>
-            </div>
-            <div>
-              <button class="expansion-button" mat-raised-button="primary">Einsehen</button>
-            </div>
-            <div>
-              <button class="expansion-button" mat-raised-button="primary">Archivieren</button>
-            </div>
-            <div>
-              <p>Letzte Bearbeitung: 12.01.2018</p>
-            </div>
-          </mat-expansion-panel>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Bachelor Arbeit
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div fxLayout="column"></div>
-            <div>
-              <button class="expansion-button" mat-raised-button="primary">Neue Version pushen</button>
-            </div>
-            <div>
-              <button class="expansion-button" mat-raised-button="primary">Einsehen</button>
-            </div>
-            <div>
-              <button class="expansion-button" mat-raised-button="primary">Archivieren</button>
-            </div>
-            <div>
-            <p>Letzte Bearbeitung: 12.01.2018</p>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
