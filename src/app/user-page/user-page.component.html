@@ -1,47 +1,51 @@
-<div style="margin-left: 20px" fxLayout="row">
+<div *ngIf="!user">
+  <p>Loggen sie sich bitte ein</p>
+  <a href="/login"><button mat-raised-button="primary">Zum Login</button></a>
+</div>
+<div *ngIf="user.uname">
+  <div style="margin-left: 20px" fxLayout="row">
   <div fxLayout="column">
     <div>
-      <h2>Hallo {{user.uname | json}}</h2>
+      <h2>Hallo {{user?.uname | json}}</h2>
+      <button mat-raised-button="primary" (click)="addDokument()">New Dokument</button>
     </div>
   </div>
 </div>
 <div fxLayout="row">
-  <img fxFlex="10" src="assets/pictures/profilMock.jpg">
-  <div>
-    <table>
-      <tbody>
-        <tr><td>Firma:</td><td> Guehring KG</td></tr>
-        <tr><td>Alter:</td><td>25</td></tr>
-        <tr><td>Wohnort:</td><td>Albstadt</td></tr>
-      </tbody>
-    </table>
-  </div>
 </div>
   <div fxLayoutAlign="center flex-end" style="margin-right: 20px" fxFlex="40%">
     <div fxLayout="column">
       <div>
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let doc of user.docs">
+          <mat-expansion-panel *ngFor="let doc of user?.docs, let d = index">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{doc.name}}
+                {{doc?.name}}
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
-              <p *ngFor="let version of doc.versions">{{version.file}}</p>
+              <div *ngFor="let version of doc.versions, let i = index" [attr.data-index]="i"><a download="{{doc.name}}" [href]="sanitize(saveByteArray(dokumentArray[d][i]))"><button mat-raised-button="primary" class="expansion-button">version {{i}}</button></a></div>
             </div>
             <div fxLayout="column"></div>
             <div>
-            <button class="expansion-button" mat-raised-button="primary">Neue Version pushen</button>
+            <button class="expansion-button" mat-raised-button="primary" (click)="openDialog(doc.did)">Neue Version pushen</button>
             </div>
             <div>
-            <button class="expansion-button" mat-raised-button="primary">Einsehen</button>
+              <button class="expansion-button" mat-raised-button="primary" (click)="openAddUserDialog(doc.did)">User hinzufügen</button>
             </div>
             <div>
-            <button class="expansion-button" mat-raised-button="primary">Archivieren</button>
+              <button class="expansion-button" mat-raised-button="primary" (click)="openRemoveUserDialog(doc.did)">User entfernen</button>
             </div>
+            <!--div>
+              <a download="hello.pdf" [href]="sanitize(saveByteArray(fileArray[0]))">
+                <button class="expansion-button" mat-raised-button="primary">Einsehen</button>
+              </a>
+            </div-->
           </mat-expansion-panel>
         </mat-accordion>
       </div>
     </div>
   </div>
+</div>
+
+

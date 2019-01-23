@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TokenStorageService} from '../services/token-storage.service';
 
 @Component({
   selector: 'app-start-page',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./start-page.component.scss']
 })
 export class StartPageComponent implements OnInit {
-items = [1,2,3];
-  constructor() { }
+  info: any;
+
+  constructor(private token: TokenStorageService){ }
 
   ngOnInit() {
+    this.info = {
+      token: this.token.getToken(),
+      username: this.token.getUsername(),
+      authorities: this.token.getAuthorities()
+    };
+  }
+
+  logout() {
+    this.token.signOut();
+    window.location.reload();
   }
 
 }

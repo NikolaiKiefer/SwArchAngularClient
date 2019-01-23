@@ -1,6 +1,10 @@
 <div class="main-div" fxLayout="column">
-  <div fxLayoutAlign="center center">
+  <div fxLayoutAlign="center center" fxLayout="column">
     <h1>Willkommen zur Datenverwaltung</h1>
+    <div *ngIf="info.token; else loggedOut">
+      <h1>{{info.username}}</h1>
+      <button mat-raised-button="primary" style="margin-bottom: 15px" (click)="logout()">Logout</button>
+    </div>
   </div>
   <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around">
     <a fxFlex="30%" href="/signUp" class="card-router">
@@ -15,7 +19,7 @@
         <button class="card-button" mat-flat-button="accent">LOGIN</button>
     </mat-card>
     </a>
-    <a fxFlex="30%" href="/infos" class="card-router">
+    <a fxFlex="30%" href="/user" class="card-router">
     <mat-card class="example-card">
       <img mat-card-image src="assets/pictures/infos.jpg" alt="Photo of a Shiba Inu">
       <mat-card-actions>
@@ -25,6 +29,4 @@
     </a>
   </div>
 </div>
-<mat-list>
-  <mat-list-item *ngFor="let item of items"><app-test-mat-item [number]="item"></app-test-mat-item></mat-list-item>
-</mat-list>
+

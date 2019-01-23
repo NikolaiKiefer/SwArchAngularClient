@@ -1,22 +1,64 @@
-<div fxLayout="column">
+<!--div fxLayout="column">
   <div fxLayoutAlign="center center">
     <div fxFlex="25%" class="form-wrapper">
       <h2>Registrierung</h2>
-      <form fxLayout="column">
-        <mat-form-field>
-          <input matInput placeholder="Name">
+      <form fxLayout="column" [formGroup]="registerForm">
+        <mat-form-field [formControl]="registerForm.nameInput">
+          <input matInput formControlName="nameInput" required placeholder="Name"id="name">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Email">
+        <mat-form-field formGroupName="registerForm">
+          <input matInput formControlName="emailInput" required placeholder="Email" id="email">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Passwort">
+        <mat-form-field formGroupName="registerForm">
+          <input matInput formControlName="passwordInput" required placeholder="Passwort" id="password">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Passwort wiederholen">
+        <mat-form-field formGroupName="registerForm">
+          <input matInput formControlName="passwordAgain" required placeholder="Passwort wiederholen">
         </mat-form-field>
-        <button mat-raised-button="accent">Registrieren</button>
+        <button [disabled]="!registerForm.valid" (click)="registerNewUser()" type="button" mat-raised-button="accent">Registrieren</button>
       </form>
     </div>
   </div>
+</div-->
+<div *ngIf="isSignedUp; else signupForm">
+  <p>Your registration is successful. Please login!</p>
+  <a href="/login"><button mat-raised-button="primary">Zum Login</button></a>
 </div>
+
+<ng-template #signupForm>
+  <div class="row col-sm-6" style="max-width:350px;" fxLayoutAlign="center center">
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate fxLayout="column" >
+      <div class="form-group">
+        <label >Username</label>
+        <input type="text"  class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel"
+               required />
+        <div *ngIf="f.submitted && username.invalid">
+          <div *ngIf="username.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel" required email />
+        <div *ngIf="f.submitted && email.invalid">
+          <div *ngIf="email.errors.required">Email is required</div>
+          <div *ngIf="email.errors.email">Email must be a valid email address</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label >Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" #password="ngModel"
+               required minlength="6" />
+        <div *ngIf="f.submitted && password.invalid">
+          <div *ngIf="password.errors.required">Password is required</div>
+          <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+      </div>
+      <div class="form-group" fxLayoutAlign="center center">
+        <button mat-raised-button="primary">Register</button>
+        <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning">
+          Signup failed!<br/>{{errorMessage}}
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
