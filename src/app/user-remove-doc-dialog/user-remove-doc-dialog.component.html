@@ -1,0 +1,5 @@
+<form>
+  <input required [(ngModel)]="userName" name="userName">
+  <button (click)="findUser()" type="button">User finden</button>
+  <button (click)="removeUser()" [disabled]="!userChecksOut">bestätigen</button>
+</form>
